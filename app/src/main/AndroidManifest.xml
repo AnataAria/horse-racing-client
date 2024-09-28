@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Horseracingclient"
         tools:targetApi="31">
         <activity android:name=".controller.CashActivity"/>
-        <activity android:name=".controller.GamePlayActivity"/>
+        <activity android:name=".controller.ResultActivity"/>
         <activity android:name=".controller.HomeActivity"/>
         <activity android:name=".controller.TurtorialActivity"/>
         <activity
