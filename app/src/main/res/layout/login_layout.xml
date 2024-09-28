@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/LoginBG1"
+    android:background="@drawable/loginbg1"
     android:alpha="0.8">
 
     <RelativeLayout
@@ -29,7 +29,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="33dp"
             android:layout_toEndOf="@id/horse"
-            android:background="@drawable/text_gradient"
+
             android:text="Horse Racing"
             android:fontFamily="sans-serif-black"
             android:textColor="#FBA95C"

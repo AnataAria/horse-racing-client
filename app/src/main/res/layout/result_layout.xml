@@ -39,7 +39,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/tvWinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -69,7 +69,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView12"
+                android:id="@+id/tvWinnings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -80,7 +80,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tvCash"
+            android:id="@+id/tvBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
