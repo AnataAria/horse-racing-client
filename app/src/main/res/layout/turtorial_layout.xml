@@ -40,7 +40,7 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Turtorial Content"
+            android:text="1. Choose a horse..\n2. Enter the bet amount.\n3. Start the race.\n4. Add more money if needed."
             android:textSize="18sp"
             android:textColor="@color/white"
             android:layout_centerInParent="true" />

@@ -34,7 +34,7 @@
                 android:layout_width="59dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="The win horse:"
+                android:text=""
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
@@ -64,7 +64,7 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="You won:"
+                android:text=""
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
