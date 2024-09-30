@@ -14,6 +14,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.theanimegroup.horse_racing_client.R;
+import com.theanimegroup.horse_racing_client.entity.User;
+
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -22,7 +25,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView cashTextView, goTextView;
     private double userBalance = 0; // Assuming starting balance is 0
     private String username;
-
+    private EditText editTextNumber3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +37,10 @@ public class HomeActivity extends AppCompatActivity {
         betAmountEditText = findViewById(R.id.betAmount);
         cashTextView = findViewById(R.id.tvCash);
         goTextView = findViewById(R.id.tvGo);
-
+        editTextNumber3 = findViewById(R.id.editTextNumber3); // Initialize your EditText
         username = getIntent().getStringExtra("username");
-
+        userBalance = getIntent().getDoubleExtra("money", 0);
+        editTextNumber3.setText(String.valueOf(userBalance));
         cashTextView.setOnClickListener(v -> {
             // Start CashActivity
             Intent intent = new Intent(HomeActivity.this, CashActivity.class);
@@ -64,12 +68,16 @@ public class HomeActivity extends AppCompatActivity {
         return 3; // horse3 is checked
     }
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
             userBalance += data.getDoubleExtra("depositAmount", 0);
+            editTextNumber3.setText(String.valueOf(userBalance)); // Update balance in EditText
         }
     }
+
 }
 
