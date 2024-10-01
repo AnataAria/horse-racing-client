@@ -33,6 +33,7 @@ public class HomeFragment extends Fragment {
     private SeekBar sbHorse1, sbHorse2, sbHorse3;
     private EditText betAmountEditText;
     private TextView cashTextView;
+    private TextView balanceText;
     private int winner = -1;
     private final List<Handler> handlers = new ArrayList<>();
     private final List<Runnable> runnables = new ArrayList<>();
@@ -54,6 +55,7 @@ public class HomeFragment extends Fragment {
         sbHorse2 = view.findViewById(R.id.seekBar2);
         sbHorse3 = view.findViewById(R.id.seekBar3);
         betAmountEditText = view.findViewById(R.id.betAmount);
+        balanceText = view.findViewById(R.id.editTextNumber3);
         cashTextView = view.findViewById(R.id.tvCash);
         TextView goTextView = view.findViewById(R.id.tvGo);
 
@@ -81,6 +83,7 @@ public class HomeFragment extends Fragment {
         goTextView.setOnClickListener(v -> {
             if (BetService.getInstance().validateBet()) {
                 double betAmount = Double.parseDouble(betAmountEditText.getText().toString());
+                DataUtils.getInstance().setTotalBet(betAmount);
                 if (DataUtils.getInstance().getCurrentUser().getCash() < betAmount) {
                     Toast.makeText(getActivity(), "Insufficient balance!", Toast.LENGTH_SHORT).show();
                     return;
@@ -93,6 +96,7 @@ public class HomeFragment extends Fragment {
             }
         });
         updateBetPrice ();
+        balanceText.setText(String.valueOf(DataUtils.getInstance().getCurrentUser().getCash()));
         return view;
     }
 
@@ -117,6 +121,7 @@ public class HomeFragment extends Fragment {
                                 .bet(betAmount)
                                 .build();
                         BetService.getInstance().addBet(bet);
+                        balanceText.setText(String.valueOf(DataUtils.getInstance().getCurrentUser().getCash()));
                     }
                 }
                 updateBetPrice ();
@@ -230,7 +235,7 @@ public class HomeFragment extends Fragment {
 
         userBalance += winnings;
 
-        Toast.makeText(getActivity(), winnings > 0 ? "You won $" + winnings : "You lost your bet", Toast.LENGTH_LONG).show();
+        DataUtils.getInstance().setWinHorse(winner);
 
         requireActivity().getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
@@ -243,7 +248,6 @@ public class HomeFragment extends Fragment {
 
     private void resetRace() {
         winner = -1;
-        finished.clear();
         sbHorse1.setProgress(0);
         sbHorse2.setProgress(0);
         sbHorse3.setProgress(0);
@@ -257,7 +261,7 @@ public class HomeFragment extends Fragment {
 
     private void stopRace() {
         for (Handler handler : handlers) {
-            handler.removeCallbacksAndMessages(null); // Remove all callbacks and stop the handlers
+            handler.removeCallbacksAndMessages(null);
         }
 
     }

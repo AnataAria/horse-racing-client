@@ -10,6 +10,8 @@ public class DataUtils {
     private static DataUtils instance;
     private Account currentUser;
     private List<Account> databaseAccount;
+    private double totalBet;
+    private int winHorse;
     public DataUtils () {
         if (databaseAccount == null) {
             databaseAccount = new ArrayList<>();
@@ -32,5 +34,21 @@ public class DataUtils {
 
     public  Collection<Account> getDatabaseAccount () {
         return databaseAccount;
+    }
+
+    public double getTotalBet () {
+        return this.totalBet;
+    }
+
+    public void setTotalBet (double value) {
+        this.totalBet = value;
+    }
+
+    public int getWinHorse() {
+        return winHorse;
+    }
+
+    public void setWinHorse(int winHorse) {
+        this.winHorse = winHorse;
     }
 }

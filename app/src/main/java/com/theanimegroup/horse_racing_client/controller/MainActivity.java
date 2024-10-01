@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.theanimegroup.horse_racing_client.R;
 
 public class MainActivity extends AppCompatActivity {
-    private  FrameLayout container;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

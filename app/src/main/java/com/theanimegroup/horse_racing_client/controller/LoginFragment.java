@@ -42,7 +42,7 @@ public class LoginFragment extends Fragment {
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out,
                                 android.R.anim.fade_in, android.R.anim.fade_out)
-                        .replace(R.id.container, homeFragment)
+                        .add(R.id.container, homeFragment)
                         .addToBackStack(null)
                         .commit();
             } else {

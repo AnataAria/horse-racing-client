@@ -12,9 +12,9 @@ import androidx.fragment.app.Fragment;
 
 import com.theanimegroup.horse_racing_client.R;
 import com.theanimegroup.horse_racing_client.service.BetService;
+import com.theanimegroup.horse_racing_client.utils.DataUtils;
 
 import java.util.List;
-import java.util.Random;
 
 public class ResultFragment extends Fragment {
 
@@ -24,12 +24,11 @@ public class ResultFragment extends Fragment {
         TextView winnerTextView = view.findViewById(R.id.tvWinner);
         TextView winningsTextView = view.findViewById(R.id.tvWinnings);
         TextView backTextView = view.findViewById(R.id.tvBack);
-        Double result = BetService.getInstance().calculateBet(List.of(1));
-        int winningHorse = new Random().nextInt(3) + 1; // 1 to 3
-        winnerTextView.setText("Winner Horse: Horse " + winningHorse);
+        int winHorse = DataUtils.getInstance().getWinHorse();
+        Double result = DataUtils.getInstance().getTotalBet();
+        winnerTextView.setText(String.format("Winner Horse: Horse %d", winHorse + 1));
         winningsTextView.setText("You won: $" + result.toString());
         backTextView.setOnClickListener(v -> {
-            HomeFragment homeFragment = new HomeFragment();
             requireActivity().getSupportFragmentManager().popBackStack();
         });
         return view;

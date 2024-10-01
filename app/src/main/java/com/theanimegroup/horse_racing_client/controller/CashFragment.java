@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.theanimegroup.horse_racing_client.R;
+import com.theanimegroup.horse_racing_client.utils.DataUtils;
 
 public class CashFragment extends Fragment {
     private EditText depositAmountEditText;
@@ -31,12 +32,8 @@ public class CashFragment extends Fragment {
             double depositAmount = Double.parseDouble(depositAmountEditText.getText().toString());
             if (depositAmount > 0) {
                 HomeFragment homeFragment = new HomeFragment();
-                requireActivity().getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out,
-                                android.R.anim.fade_in, android.R.anim.fade_out)
-                        .replace(R.id.container, homeFragment)
-                        .addToBackStack(null)
-                        .commit();
+                DataUtils.getInstance().getCurrentUser().setCash(DataUtils.getInstance().getCurrentUser().getCash() + depositAmount);
+                requireActivity().getSupportFragmentManager().popBackStack();
             } else {
                 Toast.makeText(getActivity(), "Please enter a valid amount", Toast.LENGTH_SHORT).show();
             }
