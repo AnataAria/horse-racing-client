@@ -78,6 +78,7 @@ public class HomeActivity extends AppCompatActivity {
 
     // Start the race by running the Handlers for each horse
     private void startRace() {
+        stopRace();
         resetRace();
         for (int i = 0; i < handlers.size(); i++) {
             handlers.get(i).post(runnables.get(i));
@@ -146,6 +147,15 @@ public class HomeActivity extends AppCompatActivity {
         resultIntent.putExtra("winnings", winnings);
         resultIntent.putExtra("moneyLeft", userBalance);
         startActivity(resultIntent);
+        resetRace();
+    }
+
+    // Stop any ongoing race by clearing all handlers
+    private void stopRace() {
+        for (Handler handler : handlers) {
+            handler.removeCallbacksAndMessages(null); // Remove all callbacks and stop the handlers
+        }
+
     }
 
     // Reset the race and UI elements
@@ -155,8 +165,22 @@ public class HomeActivity extends AppCompatActivity {
         sbHorse1.setProgress(0);
         sbHorse2.setProgress(0);
         sbHorse3.setProgress(0);
+
+        betAmountEditText1.setText("");
+        betAmountEditText2.setText("");
+        betAmountEditText3.setText("");
+        horse1.setChecked(false);
+        horse2.setChecked(false);
+        horse3.setChecked(false);
+
+        // Force UI update to ensure the SeekBars visually reset
+        sbHorse1.invalidate();
+        sbHorse2.invalidate();
+        sbHorse3.invalidate();
+
         for (int i = 0; i < 3; i++) {
             finished.add(false);
         }
+        stopRace();
     }
 }
