@@ -1,5 +1,6 @@
 package com.theanimegroup.horse_racing_client.controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.CheckBox;
@@ -19,7 +20,7 @@ public class HomeActivity extends AppCompatActivity {
     private EditText betAmountEditText1, betAmountEditText2, betAmountEditText3;
     private TextView goTextView, money;
     private SeekBar sbHorse1, sbHorse2, sbHorse3;
-    private double userBalance = 100.0;  // Starting balance
+    private double userBalance = 100.0;
     private int winner = -1;
     private final List<Handler> handlers = new ArrayList<>();
     private final List<Runnable> runnables = new ArrayList<>();
@@ -96,7 +97,7 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     Random random = new Random();
-                    int increment = random.nextInt(16);  // Random step for each horse
+                    int increment = random.nextInt(16);  // Random step 0-15
                     progress += increment;
                     seekBars[finalI].setProgress(progress);
 
@@ -108,7 +109,7 @@ public class HomeActivity extends AppCompatActivity {
                             winner = finalI;
                         }
                         if (!finished.contains(false)) {
-//                            announceWinner();
+                            announceWinner();
                         }
                     }
                 }
@@ -119,10 +120,8 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    /* Truyền data qua bên winner
+    // Pass result
     private void announceWinner() {
-        winnerTextView.setText("Winner: Horse " + (winner + 1));
-
         double bet1 = getBetAmount(betAmountEditText1);
         double bet2 = getBetAmount(betAmountEditText2);
         double bet3 = getBetAmount(betAmountEditText3);
@@ -140,7 +139,14 @@ public class HomeActivity extends AppCompatActivity {
         money.setText(String.format("$%.2f", userBalance));
 
         Toast.makeText(HomeActivity.this, winnings > 0 ? "You won $" + winnings : "You lost your bet", Toast.LENGTH_LONG).show();
-    }*/
+
+        // Pass result to ResultActivity
+        Intent resultIntent = new Intent(HomeActivity.this, ResultActivity.class);
+        resultIntent.putExtra("winner", "Horse " + (winner + 1));
+        resultIntent.putExtra("winnings", winnings);
+        resultIntent.putExtra("moneyLeft", userBalance);
+        startActivity(resultIntent);
+    }
 
     // Reset the race and UI elements
     private void resetRace() {
