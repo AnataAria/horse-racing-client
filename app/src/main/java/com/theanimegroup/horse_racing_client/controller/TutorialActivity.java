@@ -17,6 +17,6 @@ public class TutorialActivity extends AppCompatActivity {
         setContentView(R.layout.turtorial_layout);
 
         closeTextView = findViewById(R.id.tvClose);
-        closeTextView.setOnClickListener(v -> finish()); // Close and return to LoginActivity
+        closeTextView.setOnClickListener(v -> finish());
     }
 }

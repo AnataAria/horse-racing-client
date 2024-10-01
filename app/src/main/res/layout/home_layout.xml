@@ -8,14 +8,16 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="61dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <View
             android:id="@+id/view2"
             android:layout_width="match_parent"
             android:layout_height="217dp"
-            android:layout_marginBottom="60dp"
             android:layout_marginTop="59dp"
+            android:layout_marginBottom="60dp"
             android:background="@drawable/race_road" />
 
         <SeekBar
@@ -23,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginTop="80dp"
-            android:thumb="@drawable/horse_pixel1"/>
+            android:thumb="@drawable/horse_pixel1" />
 
         <SeekBar
             android:id="@+id/seekBar2"
@@ -31,7 +33,7 @@
             android:layout_height="35dp"
             android:layout_below="@id/seekBar"
             android:layout_marginTop="40dp"
-            android:thumb="@drawable/horse_pixel2"/>
+            android:thumb="@drawable/horse_pixel2" />
 
         <SeekBar
             android:id="@+id/seekBar3"
@@ -39,13 +41,13 @@
             android:layout_height="35dp"
             android:layout_below="@id/seekBar2"
             android:layout_marginTop="30dp"
-            android:thumb="@drawable/horse_pixel3"/>
+            android:thumb="@drawable/horse_pixel3" />
 
         <RelativeLayout
             android:layout_width="409dp"
             android:layout_height="448dp"
-            android:paddingTop="10dp"
             android:layout_below="@id/view2"
+            android:paddingTop="10dp"
             tools:ignore="MissingConstraints">
 
             <LinearLayout
@@ -122,7 +124,7 @@
                         android:textSize="20sp" />
 
                     <EditText
-                        android:id="@+id/editTextNumber4"
+                        android:id="@+id/horse1Text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
@@ -152,7 +154,7 @@
                         android:textSize="20sp" />
 
                     <EditText
-                        android:id="@+id/editTextNumber5"
+                        android:id="@+id/horse2Text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
@@ -182,7 +184,7 @@
                         android:textSize="20sp" />
 
                     <EditText
-                        android:id="@+id/editTextNumber"
+                        android:id="@+id/horse3Text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
