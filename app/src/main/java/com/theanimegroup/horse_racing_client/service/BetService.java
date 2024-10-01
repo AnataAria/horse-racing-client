@@ -35,12 +35,13 @@ public class BetService {
         return userBet.get(horseId);
     }
 
-    public Double calculateBet(List<Integer> winningHorse) {
+    public Double calculateBet(int winHorse) {
         double total = 0;
-        for (Integer item: winningHorse) {
-            Bet temp = userBet.get(item);
-            if (temp != null) {
-                total += temp.getBet();
+        for (Bet bet: userBet.values()) {
+            if(bet.getHorseId() == winHorse) {
+                total += bet.getBet() * 2;
+            } else {
+                total -= bet.getBet();
             }
         }
         return total;

@@ -9,12 +9,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.theanimegroup.horse_racing_client.R;
 import com.theanimegroup.horse_racing_client.service.BetService;
 import com.theanimegroup.horse_racing_client.utils.DataUtils;
 
 import java.util.List;
+
 
 public class ResultFragment extends Fragment {
 
@@ -25,11 +27,17 @@ public class ResultFragment extends Fragment {
         TextView winningsTextView = view.findViewById(R.id.tvWinnings);
         TextView backTextView = view.findViewById(R.id.tvBack);
         int winHorse = DataUtils.getInstance().getWinHorse();
-        Double result = DataUtils.getInstance().getTotalBet();
+        Double result = BetService.getInstance().calculateBet(winHorse);
+        DataUtils.getInstance().getCurrentUser().setCash(result + DataUtils.getInstance().getCurrentUser().getCash());
+        String resultText = result.doubleValue() > 0.0 ? "You won: $" + result.toString() : "You lose $" + result.toString();
         winnerTextView.setText(String.format("Winner Horse: Horse %d", winHorse + 1));
-        winningsTextView.setText("You won: $" + result.toString());
+        winningsTextView.setText(resultText);
         backTextView.setOnClickListener(v -> {
-            requireActivity().getSupportFragmentManager().popBackStack();
+            FragmentManager manager = requireActivity().getSupportFragmentManager();
+            HomeFragment homeFragment = new HomeFragment();
+            manager.beginTransaction()
+                    .replace(R.id.container, homeFragment).commit();
+            manager.findFragmentById(R.id.container);
         });
         return view;
     }

@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment {
     private final List<Handler> handlers = new ArrayList<>();
     private final List<Runnable> runnables = new ArrayList<>();
     private final List<Boolean> finished = new ArrayList<>();
-    private double userBalance = 0; // Starting balance
+    private double userBalance = 0;
 
     @Nullable
     @Override
@@ -54,6 +54,11 @@ public class HomeFragment extends Fragment {
         sbHorse1 = view.findViewById(R.id.seekBar);
         sbHorse2 = view.findViewById(R.id.seekBar2);
         sbHorse3 = view.findViewById(R.id.seekBar3);
+
+        sbHorse1.setEnabled(false);
+        sbHorse2.setEnabled(false);
+        sbHorse3.setEnabled(false);
+
         betAmountEditText = view.findViewById(R.id.betAmount);
         balanceText = view.findViewById(R.id.editTextNumber3);
         cashTextView = view.findViewById(R.id.tvCash);
@@ -88,7 +93,6 @@ public class HomeFragment extends Fragment {
                     Toast.makeText(getActivity(), "Insufficient balance!", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    DataUtils.getInstance().getCurrentUser().setCash(DataUtils.getInstance().getCurrentUser().getCash() - betAmount);
                     startRace();
                 }
             } else {
@@ -177,8 +181,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        userBalance = DataUtils.getInstance().getCurrentUser().getCash();
-        cashTextView.setText(String.format("Balance: $%s", userBalance));
         updateBetPrice();
     }
 
@@ -206,12 +208,12 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void run() {
                     Random random = new Random();
-                    int increment = random.nextInt(16);  // Random step 0-15
+                    int increment = random.nextInt(6);  // Random step 0-15
                     progress += increment;
                     seekBars[finalI].setProgress(progress);
 
                     if (progress < 100) {
-                        handler.postDelayed(this, 1000);
+                        handler.postDelayed(this, 100);
                     } else {
                         finished.set(finalI, true);
                         if (winner == -1) {
@@ -231,11 +233,9 @@ public class HomeFragment extends Fragment {
 
     private void announceWinner() {
 
-        double winnings = BetService.getInstance().calculateBet(List.of(winner));
+        double winnings = BetService.getInstance().calculateBet(winner);
 
         userBalance += winnings;
-
-        DataUtils.getInstance().setWinHorse(winner);
 
         requireActivity().getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
@@ -251,10 +251,6 @@ public class HomeFragment extends Fragment {
         sbHorse1.setProgress(0);
         sbHorse2.setProgress(0);
         sbHorse3.setProgress(0);
-
-        horse1.setChecked(false);
-        horse2.setChecked(false);
-        horse3.setChecked(false);
 
         stopRace();
     }

@@ -1,8 +1,5 @@
 package com.theanimegroup.horse_racing_client.controller;
 
-import static android.app.Activity.RESULT_OK;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
