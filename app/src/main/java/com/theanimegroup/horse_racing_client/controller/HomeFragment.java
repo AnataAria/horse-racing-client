@@ -18,7 +18,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.theanimegroup.horse_racing_client.R;
+import com.theanimegroup.horse_racing_client.constant.AudioStage;
 import com.theanimegroup.horse_racing_client.model.Bet;
+import com.theanimegroup.horse_racing_client.service.AudioMixer;
 import com.theanimegroup.horse_racing_client.service.BetService;
 import com.theanimegroup.horse_racing_client.utils.DataUtils;
 
@@ -34,7 +36,6 @@ public class HomeFragment extends Fragment {
     private EditText betAmountEditText;
     private TextView cashTextView;
     private TextView balanceText;
-    private int winner = -1;
     private final List<Handler> handlers = new ArrayList<>();
     private final List<Runnable> runnables = new ArrayList<>();
     private final List<Boolean> finished = new ArrayList<>();
@@ -75,6 +76,8 @@ public class HomeFragment extends Fragment {
         initEventBetChange(horse2Text, 2);
         initEventBetChange(horse3Text, 3);
 
+        AudioMixer.getInstance().playAudio(AudioStage.HOME, getContext());
+
         initRaceHandlers();
         cashTextView.setOnClickListener(v -> {
             CashFragment cashFragment = new CashFragment();
@@ -88,11 +91,11 @@ public class HomeFragment extends Fragment {
         goTextView.setOnClickListener(v -> {
             if (BetService.getInstance().validateBet()) {
                 double betAmount = Double.parseDouble(betAmountEditText.getText().toString());
-                DataUtils.getInstance().setTotalBet(betAmount);
                 if (DataUtils.getInstance().getCurrentUser().getCash() < betAmount) {
                     Toast.makeText(getActivity(), "Insufficient balance!", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
+                    AudioMixer.getInstance().playAudio(AudioStage.BEGIN, getContext());
                     startRace();
                 }
             } else {
@@ -216,8 +219,8 @@ public class HomeFragment extends Fragment {
                         handler.postDelayed(this, 100);
                     } else {
                         finished.set(finalI, true);
-                        if (winner == -1) {
-                            winner = finalI;
+                        if (DataUtils.getInstance().getWinHorse() == -1) {
+                            DataUtils.getInstance().setWinHorse(finalI);
                         }
                         if (!finished.contains(false)) {
                             announceWinner();
@@ -233,7 +236,7 @@ public class HomeFragment extends Fragment {
 
     private void announceWinner() {
 
-        double winnings = BetService.getInstance().calculateBet(winner);
+        double winnings = BetService.getInstance().calculateBet(DataUtils.getInstance().getWinHorse());
 
         userBalance += winnings;
 
@@ -247,11 +250,9 @@ public class HomeFragment extends Fragment {
     }
 
     private void resetRace() {
-        winner = -1;
         sbHorse1.setProgress(0);
         sbHorse2.setProgress(0);
         sbHorse3.setProgress(0);
-
         stopRace();
     }
 

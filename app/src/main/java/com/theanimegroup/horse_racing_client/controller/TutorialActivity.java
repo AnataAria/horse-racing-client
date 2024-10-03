@@ -15,7 +15,6 @@ public class TutorialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.turtorial_layout);
-
         closeTextView = findViewById(R.id.tvClose);
         closeTextView.setOnClickListener(v -> finish());
     }

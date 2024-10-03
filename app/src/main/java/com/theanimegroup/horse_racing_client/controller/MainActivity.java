@@ -1,8 +1,6 @@
 package com.theanimegroup.horse_racing_client.controller;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.widget.FrameLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;

@@ -12,10 +12,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.theanimegroup.horse_racing_client.R;
+import com.theanimegroup.horse_racing_client.constant.AudioStage;
+import com.theanimegroup.horse_racing_client.service.AudioMixer;
 import com.theanimegroup.horse_racing_client.service.BetService;
 import com.theanimegroup.horse_racing_client.utils.DataUtils;
 
-import java.util.List;
 
 
 public class ResultFragment extends Fragment {
@@ -27,11 +28,18 @@ public class ResultFragment extends Fragment {
         TextView winningsTextView = view.findViewById(R.id.tvWinnings);
         TextView backTextView = view.findViewById(R.id.tvBack);
         int winHorse = DataUtils.getInstance().getWinHorse();
-        Double result = BetService.getInstance().calculateBet(winHorse);
+        Double result = BetService.getInstance().calculateBet(winHorse + 1);
         DataUtils.getInstance().getCurrentUser().setCash(result + DataUtils.getInstance().getCurrentUser().getCash());
-        String resultText = result.doubleValue() > 0.0 ? "You won: $" + result.toString() : "You lose $" + result.toString();
         winnerTextView.setText(String.format("Winner Horse: Horse %d", winHorse + 1));
-        winningsTextView.setText(resultText);
+        if (result > 0) {
+            String resultText = "You won: $" + result.toString();
+            winningsTextView.setText(resultText);
+            AudioMixer.getInstance().playAudio(AudioStage.WIN, getContext());
+        } else {
+            String resultText = "You lose $" + result.toString();
+            winningsTextView.setText(resultText);
+            AudioMixer.getInstance().playAudio(AudioStage.LOSE, getContext());
+        }
         backTextView.setOnClickListener(v -> {
             FragmentManager manager = requireActivity().getSupportFragmentManager();
             HomeFragment homeFragment = new HomeFragment();
@@ -40,6 +48,13 @@ public class ResultFragment extends Fragment {
             manager.findFragmentById(R.id.container);
         });
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        DataUtils.getInstance().setWinHorse(-1);
+        BetService.getInstance().betReset();
     }
 }
 

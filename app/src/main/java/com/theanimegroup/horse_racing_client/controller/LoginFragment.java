@@ -14,7 +14,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.theanimegroup.horse_racing_client.R;
+import com.theanimegroup.horse_racing_client.constant.AudioStage;
 import com.theanimegroup.horse_racing_client.model.Account;
+import com.theanimegroup.horse_racing_client.service.AudioMixer;
 import com.theanimegroup.horse_racing_client.utils.DataUtils;
 
 public class LoginFragment extends Fragment {
@@ -30,6 +32,8 @@ public class LoginFragment extends Fragment {
         usernameEditText = view.findViewById(R.id.editText);
         startTextView = view.findViewById(R.id.tvStart);
         tutorialTextView = view.findViewById(R.id.tvTurtorial);
+
+        AudioMixer.getInstance().playAudio(AudioStage.LOGIN, getContext());
 
         startTextView.setOnClickListener(v -> {
             String username = usernameEditText.getText().toString();
